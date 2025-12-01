@@ -3,24 +3,29 @@ package tw.edu.pu.csim.tcyang.s1132244
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import tw.edu.pu.csim.tcyang.s1132244.ui.theme.S1132244Theme
 
-const val AUTHOR_INFO = "資管二A郭崇承"
+const val AUTHOR_INFO = "資管二A 郭崇承"
 
 @Composable
 fun ExamScreen(vm: ExamViewModel = viewModel()) {
@@ -29,34 +34,99 @@ fun ExamScreen(vm: ExamViewModel = viewModel()) {
     val height = vm.screenHeightPx
     val score = vm.score
 
-    Column(
+    val density = LocalDensity.current
+
+    val iconSizePx = 300f
+    val iconSizeDp: Dp = with(density) { iconSizePx.toDp() }
+
+    val fullIconPx = iconSizePx
+
+    val leftXOffsetPx = 0f
+    val rightXOffsetPx = width - fullIconPx
+
+    val topYTargetPx = height / 2
+    val bottomYTargetPx = height
+
+    val topYOffsetPx = topYTargetPx - fullIconPx
+    val bottomYOffsetPx = bottomYTargetPx - fullIconPx
+
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Yellow),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .background(Color.Yellow)
     ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.happy),
+                contentDescription = "App Logo",
+                contentScale = ContentScale.Fit
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(text = "瑪利亞基金會服務大考驗", fontSize = 16.sp)
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(text = "作者: $AUTHOR_INFO", fontSize = 16.sp)
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(text = "螢幕大小: ${String.format("%.1f", width)} * ${String.format("%.1f", height)}", fontSize = 16.sp)
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(text = "成績: $score 分", fontSize = 16.sp)
+        }
+
         Image(
-            painter = painterResource(id = R.drawable.happy),
-            contentDescription = "App Logo",
-            contentScale = ContentScale.Fit
+            painter = painterResource(id = R.drawable.role0),
+            contentDescription = "Baby",
+            modifier = Modifier
+                .size(iconSizeDp)
+                .offset(
+                    x = with(density) { leftXOffsetPx.toDp() },
+                    y = with(density) { topYOffsetPx.toDp() }
+                )
         )
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Image(
+            painter = painterResource(id = R.drawable.role1),
+            contentDescription = "Child",
+            modifier = Modifier
+                .size(iconSizeDp)
+                .offset(
+                    x = with(density) { rightXOffsetPx.toDp() },
+                    y = with(density) { topYOffsetPx.toDp() }
+                )
+        )
 
-        Text(text = "瑪利亞基金會服務大考驗", fontSize = 16.sp)
+        Image(
+            painter = painterResource(id = R.drawable.role2),
+            contentDescription = "Adult",
+            modifier = Modifier
+                .size(iconSizeDp)
+                .offset(
+                    x = with(density) { leftXOffsetPx.toDp() },
+                    y = with(density) { bottomYOffsetPx.toDp() }
+                )
+        )
 
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Text(text = "作者: $AUTHOR_INFO", fontSize = 16.sp)
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Text(text = "螢幕大小: ${String.format("%.1f", width)} * ${String.format("%.1f", height)}", fontSize = 16.sp)
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Text(text = "成績: $score 分", fontSize = 16.sp)
+        Image(
+            painter = painterResource(id = R.drawable.role3),
+            contentDescription = "Citizen",
+            modifier = Modifier
+                .size(iconSizeDp)
+                .offset(
+                    x = with(density) { rightXOffsetPx.toDp() },
+                    y = with(density) { bottomYOffsetPx.toDp() }
+                )
+        )
     }
 }
 
