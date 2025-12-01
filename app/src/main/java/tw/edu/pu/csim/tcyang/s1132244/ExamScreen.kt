@@ -83,7 +83,7 @@ fun ExamScreen(vm: ExamViewModel = viewModel()) {
                 fontSize = 16.sp
             )
             Spacer(modifier = Modifier.height(10.dp))
-            Text(text = "成績: $score 分", fontSize = 16.sp)
+            Text(text = "成績: $score 分 ${vm.statusMessage}", fontSize = 16.sp)
         }
 
         Image(
