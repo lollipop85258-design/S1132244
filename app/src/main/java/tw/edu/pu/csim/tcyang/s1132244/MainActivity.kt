@@ -11,12 +11,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import tw.edu.pu.csim.tcyang.s1132244.ui.theme.S1132244Theme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
+
+        val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
+
+        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
+
+        windowInsetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
         setContent {
             S1132244Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
