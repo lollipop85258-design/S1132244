@@ -1,5 +1,6 @@
 package tw.edu.pu.csim.tcyang.s1132244
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
@@ -15,10 +16,12 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,6 +29,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.flow.collectLatest
 import tw.edu.pu.csim.tcyang.s1132244.ui.theme.S1132244Theme
 import java.util.Locale
 
@@ -39,6 +43,13 @@ fun ExamScreen(vm: ExamViewModel = viewModel()) {
     val score = vm.score
 
     val density = LocalDensity.current
+    val context = LocalContext.current
+
+    LaunchedEffect(vm.toastMessageFlow) {
+        vm.toastMessageFlow.collectLatest { message ->
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        }
+    }
 
     val iconSizePx = 300f
     val iconSizeDp: Dp = with(density) { iconSizePx.toDp() }
@@ -94,7 +105,8 @@ fun ExamScreen(vm: ExamViewModel = viewModel()) {
                 .offset(x = serviceIconXDp, y = serviceIconYDp)
                 .draggable(
                     state = draggableState,
-                    orientation = Orientation.Horizontal
+                    orientation = Orientation.Horizontal,
+                    enabled = !vm.isGamePaused // 遊戲暫停時，禁止拖曳
                 )
         )
 

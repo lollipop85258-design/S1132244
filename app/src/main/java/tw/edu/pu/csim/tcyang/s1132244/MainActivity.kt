@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
 
                 val displayMetrics = resources.displayMetrics
                 val widthPx = displayMetrics.widthPixels.toFloat()
-                val heightPx = displayMetrics.heightPixels.toFloat()
+                val heightPx = displayMetrics.heightPixels.toFloat() // 使用 dimensionPixels 更準確
 
                 vm.setScreenSize(widthPx, heightPx)
 
